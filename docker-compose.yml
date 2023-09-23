@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  web:
+    image: node
+    command: bash -c "npm install && npm start"
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13 # Use your preferred PostgreSQL version
+    environment:
+      POSTGRES_DB: data_note
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    volumes:
+      - data_note:/var/lib/postgresql/data
+
+volumes:
+  data_note:
